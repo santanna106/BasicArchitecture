@@ -4,8 +4,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.basicarchitecture.data.repository.ContatoRepository
+import com.example.basicarchitecture.model.Contato
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ContatoViewModel : ViewModel() {
+class ContatoViewModel @Inject constructor(
+    private val repository: ContatoRepository
+) : ViewModel() {
     private var _nome = MutableLiveData<String>()
     private var _email = MutableLiveData<String>()
 
@@ -25,7 +33,14 @@ class ContatoViewModel : ViewModel() {
     }
 
     suspend fun saveItem() {
+        try{
+            val contato = Contato(nome = _nome.value!!,email = _email.value!!)
+            viewModelScope.launch (Dispatchers.IO){
+                repository.insert(contato)
+            }
+        } catch (t:Throwable) {
 
+        }
     }
 
     fun reinitializeData() {
