@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.basicarchitecture.data.repository.ContatoRepository
 import com.example.basicarchitecture.model.Contato
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ContatoViewModel @Inject constructor(
     private val repository: ContatoRepository
 ) : ViewModel() {
@@ -32,15 +34,9 @@ class ContatoViewModel @Inject constructor(
         Log.d("GameFragment", "GameViewModel destroyed!")
     }
 
-    suspend fun saveItem() {
-        try{
-            val contato = Contato(nome = _nome.value!!,email = _email.value!!)
-            viewModelScope.launch (Dispatchers.IO){
-                repository.insert(contato)
-            }
-        } catch (t:Throwable) {
+    fun salvar() {
+        Log.d("TESTE","TESTE")
 
-        }
     }
 
     fun reinitializeData() {
