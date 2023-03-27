@@ -1,6 +1,8 @@
 package com.example.basicarchitecture.ui.contato
 
 import android.util.Log
+import androidx.databinding.Bindable
+import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,8 +18,9 @@ import javax.inject.Inject
 class ContatoViewModel @Inject constructor(
     private val repository: ContatoRepository
 ) : ViewModel() {
-    private var _nome = MutableLiveData<String>()
-    private var _email = MutableLiveData<String>()
+
+    val _nome = MutableLiveData<String>()
+    var _email = MutableLiveData<String>()
 
     val nome: LiveData<String>
         get() = _nome
@@ -26,17 +29,26 @@ class ContatoViewModel @Inject constructor(
         get() = _email
 
     init {
-        Log.d("GameFragment", "GameViewModel created!")
+        Log.d("BasicArchitecture", "BasicArchitecture created!")
     }
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("GameFragment", "GameViewModel destroyed!")
+        Log.d("BasicArchitecture", "BasicArchitecture destroyed!")
     }
 
-    fun salvar() {
-        Log.d("TESTE","TESTE")
+    fun setNome(pNome: String) {
+        _nome.value = pNome
+    }
 
+
+    fun salvar() {
+        Log.d("nome",nome.value.toString())
+        Log.d("email",email.value.toString())
+        val contato = Contato(null,nome.value.toString(),email.value.toString())
+        viewModelScope.launch (Dispatchers.IO){
+            repository.insert(contato)
+        }
     }
 
     fun reinitializeData() {

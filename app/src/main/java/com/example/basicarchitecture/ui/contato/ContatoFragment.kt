@@ -12,16 +12,7 @@ import com.example.basicarchitecture.databinding.FragmentHomeBinding
 import com.example.basicarchitecture.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ContatoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 @AndroidEntryPoint
 class ContatoFragment : Fragment() {
     private var _binding: FragmentContatoBinding? = null
@@ -39,6 +30,7 @@ class ContatoFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentContatoBinding.inflate(inflater, container, false)
         _binding?.contatoViewModel = viewModel
+
         return binding.root
     }
 
